@@ -6,12 +6,12 @@ services:
       repo: bikram20/done-it
       branch: main
       deploy_on_push: true
-    build_command: npm run build
-    run_command: npm start
+    build_command: bun run build
+    run_command: bun run start
     http_port: 3000
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
-    environment_slug: node-js
+    environment_slug: bun
     envs:
       - key: PORT
         value: "3000"
