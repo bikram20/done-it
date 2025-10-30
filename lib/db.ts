@@ -33,7 +33,9 @@ if (isProduction) {
   // PostgreSQL for production
   pgPool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_URL?.includes('localhost') ? false : { rejectUnauthorized: false }
+    ssl: {
+      rejectUnauthorized: false
+    }
   });
 } else {
   // SQLite for local development
