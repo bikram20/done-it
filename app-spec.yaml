@@ -21,6 +21,10 @@ services:
         scope: RUN_AND_BUILD_TIME
       - key: NODE_ENV
         value: production
+      - key: DB_POSTGRESDB_SSL_ENABLED
+        value: "true"
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
 databases:
   - name: db
     engine: PG

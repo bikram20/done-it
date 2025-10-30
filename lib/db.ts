@@ -31,11 +31,14 @@ let pgPool: Pool | null = null;
 
 if (isProduction) {
   // PostgreSQL for production
+  const sslEnabled = process.env.DB_POSTGRESDB_SSL_ENABLED === 'true';
+  const rejectUnauthorized = process.env.DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED !== 'false';
+
   pgPool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    ssl: sslEnabled ? {
+      rejectUnauthorized: rejectUnauthorized
+    } : false
   });
 } else {
   // SQLite for local development
