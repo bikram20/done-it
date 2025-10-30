@@ -31,8 +31,11 @@ let pgPool: Pool | null = null;
 
 if (isProduction) {
   // PostgreSQL for production (DigitalOcean Managed Database)
+  // Remove sslmode parameter from connection string and configure SSL explicitly
+  const connectionString = process.env.DATABASE_URL?.replace(/\?sslmode=\w+/, '') || process.env.DATABASE_URL;
+
   pgPool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString,
     ssl: {
       rejectUnauthorized: false  // Required for DigitalOcean Managed Databases
     }
