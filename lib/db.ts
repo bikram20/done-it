@@ -30,15 +30,12 @@ let sqliteDb: Database.Database | null = null;
 let pgPool: Pool | null = null;
 
 if (isProduction) {
-  // PostgreSQL for production
-  const sslEnabled = process.env.DB_POSTGRESDB_SSL_ENABLED === 'true';
-  const rejectUnauthorized = process.env.DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED !== 'false';
-
+  // PostgreSQL for production (DigitalOcean Managed Database)
   pgPool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: sslEnabled ? {
-      rejectUnauthorized: rejectUnauthorized
-    } : false
+    ssl: {
+      rejectUnauthorized: false  // Required for DigitalOcean Managed Databases
+    }
   });
 } else {
   // SQLite for local development
