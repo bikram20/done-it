@@ -1,0 +1,28 @@
+spec:
+  name: done-it
+  region: nyc
+  services:
+    - name: web
+      git:
+        branch: main
+        repo_clone_url: https://github.com/bikram20/done-it.git
+      build_command: bun run build
+      run_command: bun run start
+      http_port: 3000
+      instance_count: 1
+      instance_size_slug: apps-s-1vcpu-0.5gb
+      environment_slug: bun
+      envs:
+        - key: PORT
+          value: "3000"
+        - key: DATABASE_URL
+          value: ${db.DATABASE_URL}
+          type: SECRET
+          scope: RUN_AND_BUILD_TIME
+        - key: NODE_ENV
+          value: production
+  databases:
+    - name: db
+      engine: PG
+      production: false
+      version: "16"
